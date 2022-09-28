@@ -15,7 +15,15 @@ menu "ESPDrone Config"
             bool "esp-drone with esp32-s2 onboard"
 
     endchoice
-
+    choice
+	    prompt "Enable BLE/WiFi"
+	    default ENABLE_WIFI
+	    config ENABLE_WIFI
+	        bool "communicate through WiFi"
+	    config ENABLE_BLE
+	        bool "communicate through BLE"
+	    
+    endchoice
     choice
         prompt "extend board version"
         default EXT_AUTO_DETECT
@@ -207,12 +215,12 @@ menu "ESPDrone Config"
                 GPIO number (IOxx) MPU_PIN_INT
 
         config ADC1_PIN
-            int "EXT01_PIN GPIO number"
+            int "ADC1_PIN GPIO number"
             range 32 39 if TARGET_ESPLANE_V1
             default 35 if TARGET_ESPLANE_V1
             range 1 10 if TARGET_ESPLANE_V2_S2
             default 2 if TARGET_ESPLANE_V2_S2
-            range 1 10 if TARGET_ESP32_S2_DRONE_V1_2
+            range 1 39 if TARGET_ESP32_S2_DRONE_V1_2
             default 2 if TARGET_ESP32_S2_DRONE_V1_2
             help
                 GPIO number (IOxx) ADC1_PIN
@@ -262,7 +270,16 @@ menu "ESPDrone Config"
             default 8 if TARGET_ESP32_S2_DRONE_V1_2
             help
                 GPIO number (IOxx) LED_PIN_RED
-
+        config WS2812B_PIN
+            int "WS2812B_PIN GPIO number"
+            default -1
+            help
+                GPIO number (IOxx) -1 if not used
+        config WS2812B_LEDS
+            int "WS2812B_LEDS number of leds"
+            range 1 100
+            help
+                Number of WS2812B leds
     endmenu
 
     menu "motors config"

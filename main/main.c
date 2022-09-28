@@ -21,6 +21,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "log.h"
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -32,6 +33,7 @@
 #include "system.h"
 #define DEBUG_MODULE "APP_MAIN"
 #include "debug_cf.h"
+
 
 void app_main()
 {
@@ -49,7 +51,6 @@ void app_main()
     }
 
     ESP_ERROR_CHECK(ret);
-
     /*Initialize the platform.*/
     if (platformInit() == false) {
         while (1);//if  firmware is running on the wrong hardware, Halt
